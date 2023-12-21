@@ -29,12 +29,14 @@ color: #0C5E69;
 }
 .contain-card{
     display: flex;
-    gap: 80px;
+    gap: 10px;
+    float: right;
+    margin-bottom: 100px;
 }
 .card{
     width: 250px;
     height: 100px;
-    margin-left: 70px;
+    margin-left: 10px;
 }
 .card-title{
     background-color: #0C5E69;
@@ -44,9 +46,11 @@ color: #0C5E69;
     font-family: Gothic A1;
     font-size: 15px;
     font-weight: 400;
-    
     text-align: center;
     
+}
+.card-title>h1{
+    color: white;
 }
 .card-price{
     /* background-color: #0C5E69; */
@@ -75,7 +79,7 @@ color: #0C5E69;
 }
 .table th{
     background-color: #0C5E69;
-    color: wh;
+    color: white;
 }
 .modal{
     display: none;
@@ -136,4 +140,9 @@ color: #0C5E69;
     border: 1px solid red;
     padding: 14px 20px ;
     cursor: pointer;
+}
+
+.before-table{
+    display: inline-block;
+    margin-left: 10px;
 }
