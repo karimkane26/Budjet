@@ -1,171 +1,182 @@
-function getRevenus() {
-    return JSON.parse(localStorage.getItem('revenu'))
-  }
+// recuper le revenu sous forme de liste 
+function getRevenu(){
+    return JSON.parse(localStorage.getItem('Revenue'))
+}
+let initialRevenu = getRevenu() || []
+const TableRevenu = document.querySelector('.tableRevenu')
+const bodyRevenu = document.createElement('Tbody')
+const divRevenu = document.createElement('div')
+ // ajouter dans localstorage
+function SetRevenu(Revenue){
+    localStorage.setItem('Revenue',JSON.stringify(Revenue))
+}
+SetRevenu(initialRevenu)
+let Revenue = getRevenu()
+// console.log(Revenue)
 
-// un tableau de depenses : on recupere la fonction soit une chaine vide
-let initialRevenu = getRevenus() || []
+const beforeRevenu = document.querySelectorAll('before-tableRevenu')
+divRevenu.setAttribute('id','Revenu')
 
-const table = document.querySelector('.table')
-const tblBody = document.createElement('tbody')
+let h1 = document.createElement('h1')
+h1.textContent = "Liste des Revenues "
+divRevenu.appendChild(h1)
+creaTableRevenu()
 
-// ajouter dans localstorage
-function setRevenu(revenu) {
-    localStorage.setItem('revenu', JSON.stringify(revenu)) 
-  }
+function creaTableRevenu(){
+    for(let index=0;index<Revenue.length;index++){
 
-
-
-// function
-// Recuperer depuis localstorage
-
-setRevenu(initialRevenu)
-let revenu = getRevenus()
-// console.log(({depenses}));
-creaTable()
-//Creation du tableau avec les donnees aui persiste
-function creaTable(){
-    // nous parcours un index = taille du tableau 
-    for(let index=0;index<revenu.length;index++){
-        //  creation des tr 
-        let row = document.createElement('tr') 
-       // creer le button de supression
-      let buttonCell = document.createElement('td')
-      let deleteButton = document.createElement('button')
-      let buttonText = document.createTextNode('Supprimer')
-      deleteButton.setAttribute('class', 'delete-btn')
-      deleteButton.appendChild(buttonText)
-      for(let element = 0; element <Object.keys(revenu[0]).length; element++){
-    //ajout td
-    deleteButton.setAttribute("revenumontant",revenu[index].Montant)
-             const cell = document.createElement('td')
-             const cellText = document.createTextNode(Object.values(revenu[index])[element])
-             buttonCell.appendChild(deleteButton)
-             cell.appendChild(cellText)
-             row.appendChild(cell)
-             row.appendChild(buttonCell)
-             row.setAttribute("id",revenu[index].Montant)
+        let ligne = document.createElement('tr') 
+        // Button de Supression
+        let buttonCellule = document.createElement('td')
+        let deleteButtonRev = document.createElement('button')
+        let buttonTextRev = document.createTextNode('supprimer')
+        deleteButtonRev.setAttribute('class','delete-btn')
+        deleteButtonRev.appendChild(buttonTextRev)
+        for(let element =0;element<Object.keys(Revenue[0]).length;element++ ){
+        // Ajout des TD
+            const cellulle = document.createElement('td')
+            const cellulleText = document.createTextNode(Object.values(Revenue[index])[element])
+            deleteButtonRev.setAttribute('revenumontant',Revenue[index].MontantRevenu)
+            buttonCellule.appendChild(deleteButtonRev)
+            cellulle.appendChild(cellulleText)
+            ligne.appendChild(cellulle)
+            ligne.appendChild(buttonCellule)
+            ligne.setAttribute("id",Revenue[index].MontantRevenu)
         }
-        tblBody.appendChild(row)
+        bodyRevenu.appendChild(ligne)
+           // creer le button de supression
     }
-        
+    TableRevenu.appendChild(bodyRevenu)
+    divRevenu.appendChild(TableRevenu)
+    document.body.appendChild(divRevenu)
 }
-let plus = document.createElement('td')
-let plusbtn = document.createElement('button')
-plusbtn.setAttribute("id","addbtnmodal")
-let pluscontent = document.createTextNode('+')
-plusbtn.appendChild(pluscontent)
-plus.appendChild(plusbtn)
-tblBody.appendChild(plus)
-table.appendChild(tblBody)
-document.body.appendChild(table)
-//le model
-let modal = document.getElementById('contactModal')
-let modalButton = document.getElementById('addbtnmodal')
-let close = document.querySelector('.close')
 
-modalButton.onclick = function () {
-    modal.style.display = 'block'
+let plusbtntd = document.createElement('td')
+let ButtonPlus = document.createElement('button')
+ButtonPlus.setAttribute("id","addbtnmodalRevenu")
+let ButtonPluscontent = document.createTextNode('+')
+ButtonPlus.appendChild(ButtonPluscontent)
+plusbtntd.appendChild(ButtonPlus)
+bodyRevenu.appendChild(plusbtntd)
+
+
+// le model
+let modalRevenu = document.getElementById('ModalRevenu')
+let modalButtonRevenu = document.getElementById('addbtnmodalRevenu')
+let closeRevenu = document.querySelector('.closeRevenu')
+// console.log(modalRevenu)
+modalButtonRevenu.onclick = function () {
+    modalRevenu.style.display = 'block'
 }
-close.onclick = function(){
-    modal.style.display='none'
+closeRevenu.onclick = function(){
+    modalRevenu.style.display='none'
 }
 window.onclick = function(event){
-    if(event.target == modal){
-        modal.style.display = 'none'
+    if(event.target == modalRevenu){
+        modalRevenu.style.display = 'none'
     }
 }
 // Suppression
-let deleteButton = document.querySelectorAll('.delete-btn')
-deleteButton.forEach(function(button){
-    button.addEventListener('click',function(){
-        const Montant = this.getAttribute('revenumontant')
-        let row = document.getElementById(Montant)
-        row.parentNode.removeChild(row)
-        // enlever l'element supprimer
-        let filteredRevenu= depenses.filter(
-            (revenu) => revenu.Montant !== Montant
-        )
-        revenu = filteredRevenu
-        // setCount(depenses.length)
-        setRevenu(revenu)
+let deleteButtonRev = document.querySelectorAll('.delete-btn')
+deleteButtonRev.forEach(function(buttonRevenu){
+    buttonRevenu.addEventListener('click',function(){
+        const Revmont = this.getAttribute("revenumontant")
+        let ligne = document.getElementById(Revmont)
+        ligne.parentNode.removeChild(ligne)
+        // enlever l'élement à supprimer
+        let Revenua_supprimer = Revenue.filter((Revenu) => Revenu.MontantRevenu !== Revmont)
+        Revenue = Revenua_supprimer
+        SetRevenu(Revenue)
+        SoldeRevenue-=parseInt(MontantRevenu)
+                budjet.innerText =SoldeRevenue
+                localStorage.setItem("SoldeRevenue",SoldeRevenue) 
+
     })
 })
-// console.log(depenses['Montant'])
-var TotalRevenus =0
-function update_revenu(){
-     for(var i = 0; i<revenu.length;i++){
-         TotalRevenus += parseInt(revenu[i]['Montant'])
+
+var TotalRevenu =0;
+function update_revenue(){
+     for(var i = 0; i<Revenue.length;i++){
+        TotalRevenu += parseInt(Revenue[i]['MontantRevenu'])
         // localStorage.setItem('som',JSON.stringify(som))
         //  return JSON.parse(localStorage.getItem('som'))
      }
-     return TotalRevenus
-
+     return TotalRevenu
 }
-
-let Result = update_revenu()
-console.log(Result)
-
-// function getResult() {
-//     return JSON.parse(localStorage.getItem('Result'))
-//   }
-
-function FetTotalRevenu(Result){
-    localStorage.setItem("Result",JSON.stringify(Result))
-}
-
-
-let solde = document.getElementById("solde")
-solde.style.padding ="20px"
-solde.innerText = Result
-// console.log(Result) 
-FetTotalRevenu(Result)
-
-// Result = getResult()
-// update_depense()
-
-// update_depense()
-// ajouter un contact 
-// 
-
-// let somme = depenses[0]['Montant']
-// console.log(somme)
-let addContactButton = document.querySelector(".addContactButton")
-addContactButton.onclick = function(event){
+let SoldeRevenue = update_revenue()
+localStorage.setItem("SoldeRevenue",JSON.stringify(SoldeRevenue))
+// Ajout de données
+function getSoldeRevenu(){
+    return (JSON.parse(localStorage.getItem('SoldeRevenue')))
+} 
+let addRevenuButton = document.querySelector(".addRevenuButton")
+addRevenuButton.onclick=function(event){
     event.preventDefault()
-    const Titre = document.getElementById('Titre').value
-    const Montant = document.getElementById('Montant').value
-    if (!Titre || !Montant ) {
+    const TitreRevenu = document.getElementById('TitreRevenu').value
+    const MontantRevenu = document.getElementById('MontantRevenu').value
+    if(!TitreRevenu || !MontantRevenu){
         alert('merci de tout remplir')
         return
-      }
-      const newRevenus = {Titre, Montant}
-      revenu.push(newRevenus)
-    setRevenu(revenu) 
-    //   ajout d'un evenement
-    deleteButton.addEventListener('click',function(){
-            const Montant = this.getAttribute('depensesmontant')
-            let row = document.getElementById(Montant)
-            row.parentNode.removeChild(row)
-            // enlever l'element supprimer
-        let filteredDepenses = depenses.filter(
-            (depense) => depense.Montant !== Montant
-        )
-        depenses = filteredDepenses
-        setRevenu(revenu)
-    })
-      buttonCell.appendChild(deleteButton)
-      row.appendChild(buttonCell)
-      row.setAttribute('id',Montant)
-      tblBody.appendChild(row)
-      table.appendChild(tblBody)
-      document.body.appendChild(table)
-        // vider les inputs
-    document.getElementById('Titre').value = ''
-    document.getElementById('Montant').value = ''
+    }
+    if(MontantRevenu<0){
+        return(alert("le revenu ne peut  etre négatif "))
+    }
+    const newRevenu = {TitreRevenu, MontantRevenu}
+    Revenue.push(newRevenu)
+    SetRevenu(Revenue)
+    SoldeRevenue+=parseInt(MontantRevenu)
+    budjet.innerText =SoldeRevenue
+    localStorage.setItem("SoldeRevenue",SoldeRevenue)
+    // console.log(SoldeRevenue)
+    // getRevenu()
+    let ligne = document.createElement('tr')
+    let cellule0 = ligne.insertCell(0)
+    const cellule0Text = document.createTextNode(TitreRevenu)
+    cellule0.appendChild(cellule0Text)
+    ligne.appendChild(cellule0)
+
+    let cellule1 = ligne.insertCell(0)
+    const cellule1Text = document.createTextNode(MontantRevenu)
+    cellule1.appendChild(cellule1Text)
+    ligne.appendChild(cellule1)
+    // boutton de suppression
+        let buttonCellule = document.createElement('td')
+        let deleteButtonRev = document.createElement('button')
+        let buttonTextRev = document.createTextNode('supprimer')
+        deleteButtonRev.setAttribute('class','delete-btn')
+        deleteButtonRev.setAttribute('revenumontant',MontantRevenu)
+        deleteButtonRev.appendChild(buttonTextRev)
+        // evenement de suppression
+        deleteButtonRev.addEventListener('click',function(){
+                const Revmont = this.getAttribute("revenumontant")
+                console.log("Revmont"+Revmont)
+                let ligne = document.getElementById(Revmont)
+                ligne.parentNode.removeChild(ligne)
+        
+                // enlever l'élement à supprimer
+                let Revenuasupprimer = Revenue.filter((revenu)=>revenu.MontantRevenu !== Revmont)
+                Revenue = Revenuasupprimer
+                SetRevenu(Revenue)
+                SoldeRevenue-=parseInt(MontantRevenu)
+                budjet.innerText =SoldeRevenue
+                localStorage.setItem("SoldeRevenue",SoldeRevenue)
+
+            })  
+            buttonCellule.appendChild(deleteButtonRev)
+            ligne.appendChild(buttonCellule)
+            ligne.setAttribute('id',MontantRevenu)
+            bodyRevenu.appendChild(ligne)
+            bodyRevenu.appendChild(plusbtntd)
+            TableRevenu.appendChild(bodyRevenu)
+            divRevenu.appendChild(TableRevenu)
+            document.body.appendChild(divRevenu)
+            // vider les input
+            document.getElementById('TitreRevenu').value =''
+            document.getElementById('MontantRevenu').value =''
+
 }
 
-setRevenu(revenu)
-
-// console.log(Object.values(depenses[0]))
-// console.log(depenses)
-console
+// SetRevenu(Revenue)
+TableRevenu.appendChild(bodyRevenu)
+divRevenu.appendChild(TableRevenu)
+document.body.appendChild(divRevenu)

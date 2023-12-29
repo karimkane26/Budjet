@@ -5,7 +5,7 @@ function getDepenses() {
 // un tableau de depenses : on recupere la fonction soit une chaine vide
 let initialDepense = getDepenses() || []
 
-const table = document.querySelector('.table')
+const table = document.querySelector('.tableDepenses')
 const tblBody = document.createElement('tbody')
 function setCount(count) {
     countElement.innerHTML = count
@@ -113,30 +113,33 @@ let Result = update_depense()
 //     return JSON.parse(localStorage.getItem('Result'))
 //   }
 // Demande du Budjet
-
 let budjet = document.getElementById("budjet")
 // console.log(Object.values(depenses))
-function setbudjet(invitebudjet)
-{
-    localStorage.setItem("invitebudjet",JSON.stringify(invitebudjet))
-}
-// test de voir si le tableau est vide sinon on demande le budjet
-if(Object.values(depenses)==""){
- var  invitebudjet = prompt("Entrez votre budjet")
-// localStorage.getItem(JSON.parse(invitebudjet))
-    setbudjet(invitebudjet) 
-} 
-function getBudjet(){
-    return(JSON.parse(localStorage.getItem('invitebudjet')))
-}
-// budjet= getBudjet()
+// function setbudjet(invitebudjet)
+// {
+//     localStorage.setItem("invitebudjet",JSON.stringify(invitebudjet))
+// }
+// // test de voir si le tableau est vide sinon on demande le budjet
+// if(Object.values(depenses)==""){
+//  var  invitebudjet = prompt("Entrez votre budjet")
+// // localStorage.getItem(JSON.parse(invitebudjet))
+//     setbudjet(invitebudjet) 
+// } 
+// if(localStorage.getItem('SoldeRevenue')){
+// function getBudjet(){
+//     return(JSON.parse(localStorage.getItem('invitebudjet')))
+// }
+let Revenudutable = JSON.parse(localStorage.getItem('SoldeRevenue'))
+ // budjet= getBudjet()
 budjet.style.padding = "20px"
-budjet.innerText= getBudjet()
+budjet.innerText= Revenudutable
 let soldebudjet= budjet.innerText
-// console.log(TotalDepenses)
-console.log(budjet.textContent)
+// 
 
-localStorage.setItem("Result",JSON.stringify(Result))
+// console.log(TotalDepenses)
+// console.log(budjet.textContent)
+
+ localStorage.setItem("Result",JSON.stringify(Result))
 
 // Result = getDepenses
 // Affichage dépenses
@@ -172,6 +175,9 @@ addContactButton.onclick = function(event){
         alert('merci de tout remplir')
         return
       }
+      if(Montant<0){
+        return(alert("le depense ne peut etre négatif "))
+    }
       const newDepenses = {Titre, Montant}
       depenses.push(newDepenses)
     setDepenses(depenses) 
@@ -181,9 +187,6 @@ addContactButton.onclick = function(event){
       depense.innerText = lastRestul
       lastRestul = localStorage.setItem("lastRestul",JSON.stringify(lastRestul))
 
-      
-    
-    
     // ajouter un tr
     let row = document.createElement('tr')
 
@@ -211,16 +214,14 @@ addContactButton.onclick = function(event){
             let row = document.getElementById(Montant)
             row.parentNode.removeChild(row)
             // enlever l'element supprimer
-        let filteredDepenses = depenses.filter(
-            (depense) => depense.Montant !== Montant
-            
-        )
+        let filteredDepenses = depenses.filter((depense) => depense.Montant !== Montant)
         depenses = filteredDepenses
         setDepenses(depenses)
     //     let subdepense  =  lastRestul- parseInt(Montant)
     //   console.log(lastRestul)
     //   depense.innerText = subdepense
     //   subdepense = localStorage.setItem("subdepense",JSON.stringify(subdepense))
+    
     })
     
     // document.body.appendChild(table)
@@ -232,16 +233,14 @@ addContactButton.onclick = function(event){
     // table.appendChild(tblBody)
       table.appendChild(tblBody)
       document.body.appendChild(table)
+    //   document.body.appendChild(div)
         // vider les inputs
-
-       
     document.getElementById('Titre').value = ''
     document.getElementById('Montant').value = ''
 }
-
-
 setDepenses(depenses)
 
-// console.log(Object.values(depenses[0]))
-// console.log(depenses)
-console
+// Table de Revenue 
+
+
+
